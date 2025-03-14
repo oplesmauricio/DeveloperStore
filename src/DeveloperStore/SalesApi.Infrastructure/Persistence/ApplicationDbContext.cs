@@ -17,7 +17,18 @@ namespace SalesApi.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SaleItem>().HasKey(si => si.Id);
+            modelBuilder.Entity<Product>();
+
+            modelBuilder.Entity<Sale>()
+                .HasMany(s => s.Items)
+                .WithOne(si => si.Sale)
+                .HasForeignKey(si => si.SaleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SaleItem>()
+                .Property(si => si.Id)
+                .ValueGeneratedOnAdd();
+
             base.OnModelCreating(modelBuilder);
         }
     }

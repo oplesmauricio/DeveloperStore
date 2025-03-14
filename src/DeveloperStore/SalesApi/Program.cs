@@ -10,8 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+var connectionString = builder.Configuration.GetConnectionString("Postgres");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase("SalesDb"));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IProductService, ProductService>();
