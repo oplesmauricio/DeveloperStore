@@ -1,0 +1,19 @@
+{
+    "Routes": [
+        {
+            "UpstreamPathTemplate": "/gateway/product",
+            "UpstreamHttpMethod": [ "Get", "Post" ],
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "sales-api",
+                    "Port": 8090
+                }
+            ],
+            "DownstreamPathTemplate": "/api/Product"
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:7777"
+    }
+}

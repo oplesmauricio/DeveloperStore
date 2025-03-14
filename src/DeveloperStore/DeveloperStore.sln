@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesApi.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesApi.Application", "SalesApi.Application\SalesApi.Application.csproj", "{1B2A2444-E70F-436D-92F3-7077075D6608}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{6D975CF5-D2B1-43FA-88D4-102BB4CA588E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Gateway\Gateway.csproj", "{31D9CF75-B0EE-4323-8923-5CB5697B351E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{137353BA-9E38-4AB7-A790-0F597AAA9D06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +41,14 @@ Global
 		{1B2A2444-E70F-436D-92F3-7077075D6608}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B2A2444-E70F-436D-92F3-7077075D6608}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B2A2444-E70F-436D-92F3-7077075D6608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31D9CF75-B0EE-4323-8923-5CB5697B351E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31D9CF75-B0EE-4323-8923-5CB5697B351E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31D9CF75-B0EE-4323-8923-5CB5697B351E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31D9CF75-B0EE-4323-8923-5CB5697B351E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{137353BA-9E38-4AB7-A790-0F597AAA9D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{137353BA-9E38-4AB7-A790-0F597AAA9D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{137353BA-9E38-4AB7-A790-0F597AAA9D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{137353BA-9E38-4AB7-A790-0F597AAA9D06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +58,6 @@ Global
 		{11E3B62C-EAD1-460E-8C2B-5E9AEA5D70D6} = {E441DBFB-8CE0-4959-835C-B0F7881CB27B}
 		{F80BE7A5-92B6-498D-BB2F-289C62D9D2E5} = {E441DBFB-8CE0-4959-835C-B0F7881CB27B}
 		{1B2A2444-E70F-436D-92F3-7077075D6608} = {E441DBFB-8CE0-4959-835C-B0F7881CB27B}
+		{31D9CF75-B0EE-4323-8923-5CB5697B351E} = {6D975CF5-D2B1-43FA-88D4-102BB4CA588E}
 	EndGlobalSection
 EndGlobal
