@@ -11,6 +11,30 @@
                 }
             ],
             "DownstreamPathTemplate": "/api/Product"
+        },
+        {
+            "UpstreamPathTemplate": "/gateway/sales",
+            "UpstreamHttpMethod": [ "Get", "Post", "Delete" ],
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "sales-api",
+                    "Port": 8090
+                }
+            ],
+            "DownstreamPathTemplate": "/api/Sales"
+        },
+        {
+            "UpstreamPathTemplate": "/gateway/sales/{id}",
+            "UpstreamHttpMethod": [ "Delete" ],
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "sales-api",
+                    "Port": 8090
+                }
+            ],
+            "DownstreamPathTemplate": "/api/Sales/{id}"
         }
     ],
     "GlobalConfiguration": {
