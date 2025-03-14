@@ -19,9 +19,21 @@ namespace SalesApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var sale = _saleService.GetSaleById(id);
-            if (sale == null) return NotFound();
-            return Ok(sale);
+            try
+            {
+                var sale = _saleService.GetSaleById(id);
+                if (sale == null) return NotFound();
+                return Ok(sale);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+
+            }
         }
 
         [HttpPost]

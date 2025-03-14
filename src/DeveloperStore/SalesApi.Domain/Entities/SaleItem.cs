@@ -22,7 +22,7 @@ namespace SalesApi.Domain.Entities
         public int SaleId { get; set; }
 
         [Column("productid")]
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
         [Column("productdescription")]
         public string ProductDescription { get; set; }

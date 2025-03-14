@@ -1,7 +1,12 @@
 ﻿CREATE TABLE Products (
-    Id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL
+    Id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    title VARCHAR(255),
+    price DECIMAL(18, 2),
+    description TEXT,
+    category VARCHAR(100),
+    image VARCHAR(255)
 );
+
 
 CREATE TABLE Sales (
     Id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -14,7 +19,7 @@ CREATE TABLE Sales (
 CREATE TABLE SaleItems (
     Id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     SaleId INT NOT NULL,
-    ProductId INT NOT NULL,
+    ProductId UUID NOT NULL,
     ProductDescription VARCHAR(255) NOT NULL,
     Quantity INT NOT NULL CHECK (Quantity > 0),
     UnitPrice DECIMAL(10,2) NOT NULL CHECK (UnitPrice > 0),

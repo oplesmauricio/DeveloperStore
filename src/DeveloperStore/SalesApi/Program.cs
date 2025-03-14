@@ -24,6 +24,8 @@ builder.Services.AddScoped<IDiscountStrategy, NoDiscountStrategy>();
 builder.Services.AddScoped<IDiscountStrategy, TenPercentDiscountStrategy>();
 builder.Services.AddScoped<IDiscountStrategy, TwentyPercentDiscountStrategy>();
 
+builder.Services.AddAutoMapper(typeof(ProfileMapper));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

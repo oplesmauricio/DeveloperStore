@@ -10,7 +10,6 @@ namespace SalesApi.Infrastructure.Persistence
     public interface IProductRepository
     {
         void Add(Product sale);
-        Product GetById(int saleId);
         IEnumerable<Product> GetAll();
         void Delete(int id);
     }

@@ -30,6 +30,5 @@ namespace SalesApi.Infrastructure.Persistence
 
         public IEnumerable<Product> GetAll() => _context.Products.ToList();
 
-        public Product GetById(int productId) => _context.Products.FirstOrDefault(s => s.Id == productId);
     }
 }
