@@ -1,4 +1,10 @@
-﻿CREATE TABLE Products (
+﻿--pra rodar o escrip abaixo eh necessairo entrar no container e ativar aextensao a seguir:
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
+
+CREATE TABLE Products (
     Id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     title VARCHAR(255),
     price DECIMAL(18, 2),
@@ -11,8 +17,9 @@
 CREATE TABLE Sales (
     Id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     SaleDate TIMESTAMP NOT NULL,
-    Customer VARCHAR(255) NOT NULL,
-    Store VARCHAR(255),
+    Customer UUID NOT NULL,
+    Store UUID,
+    SaleNumber VARCHAR(100),
     IsCanceled BOOLEAN DEFAULT FALSE
 );
 
@@ -20,7 +27,6 @@ CREATE TABLE SaleItems (
     Id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     SaleId INT NOT NULL,
     ProductId UUID NOT NULL,
-    ProductDescription VARCHAR(255) NOT NULL,
     Quantity INT NOT NULL CHECK (Quantity > 0),
     UnitPrice DECIMAL(10,2) NOT NULL CHECK (UnitPrice > 0),
     Discount DECIMAL(10,2) DEFAULT 0 CHECK (Discount >= 0),

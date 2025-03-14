@@ -5,27 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SalesApi.Domain.Entities;
+using SalesApi.Infrastructure.Entities;
 
 namespace SalesApi.Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        public DbSet<Sale> Sales { get; set; }
-        public DbSet<SaleItem> SaleItems { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<SaleEntity> Sales { get; set; }
+        public DbSet<SaleItemEntity> SaleItems { get; set; }
+        public DbSet<ProductEntity> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>();
+            modelBuilder.Entity<ProductEntity>();
 
-            modelBuilder.Entity<Sale>()
+            modelBuilder.Entity<SaleEntity>()
                 .HasMany(s => s.Items)
                 .WithOne(si => si.Sale)
                 .HasForeignKey(si => si.SaleId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<SaleItem>()
+            modelBuilder.Entity<SaleItemEntity>()
                 .Property(si => si.Id)
                 .ValueGeneratedOnAdd();
 

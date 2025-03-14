@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SalesApi.Domain.Entities;
+using SalesApi.Infrastructure.Entities;
 
 namespace SalesApi.Infrastructure.Persistence
 {
@@ -13,7 +14,7 @@ namespace SalesApi.Infrastructure.Persistence
         private readonly ApplicationDbContext _context;
         public ProductRepository(ApplicationDbContext context) => _context = context;
 
-        public void Add(Product product)
+        public void Add(ProductEntity product)
         {
             _context.Products.Add(product);
             _context.SaveChanges();
@@ -28,7 +29,7 @@ namespace SalesApi.Infrastructure.Persistence
             _context.SaveChanges();
         }
 
-        public IEnumerable<Product> GetAll() => _context.Products.ToList();
+        public IEnumerable<ProductEntity> GetAll() => _context.Products.ToList();
 
     }
 }

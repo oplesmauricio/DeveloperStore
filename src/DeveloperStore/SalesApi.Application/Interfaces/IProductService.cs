@@ -9,7 +9,7 @@ namespace SalesApi.Application.Interfaces
 {
     public interface IProductService
     {
-        Product CreateProduct(Product product);
-        IEnumerable<Product> GetAllProducts();
+        DTO.Response.ProductDto CreateProduct(DTO.Request.ProductDto product);
+        IEnumerable<DTO.Response.ProductDto> GetAllProducts();
     }
 }

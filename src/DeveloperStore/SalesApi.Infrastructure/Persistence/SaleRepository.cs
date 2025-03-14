@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SalesApi.Domain.Entities;
+using SalesApi.Infrastructure.Entities;
 
 namespace SalesApi.Infrastructure.Persistence
 {
@@ -13,21 +14,22 @@ namespace SalesApi.Infrastructure.Persistence
         private readonly ApplicationDbContext _context;
         public SaleRepository(ApplicationDbContext context) => _context = context;
 
-        public void Add(Sale sale)
+        public void Add(SaleEntity sale)
         {
             _context.Sales.Add(sale);
             _context.SaveChanges();
         }
 
-        public void Update(Sale sale)
+        public void Update(SaleEntity sale)
         {
             _context.Sales.Update(sale);
+            sale.SaleDate = sale.SaleDate.ToUniversalTime();
             _context.SaveChanges();
         }
 
-        public Sale GetById(int saleId) => _context.Sales.Include(s => s.Items).FirstOrDefault(s => s.Id == saleId);
+        public SaleEntity GetById(int saleId) => _context.Sales.Include(s => s.Items).FirstOrDefault(s => s.Id == saleId);
 
-        public IEnumerable<Sale> GetAll() => _context.Sales.Include(s => s.Items).ToList();
+        public IEnumerable<SaleEntity> GetAll() => _context.Sales.Include(s => s.Items).ToList();
 
         public void Delete(int id)
         {

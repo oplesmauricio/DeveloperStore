@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SalesApi.Application.DTO.Request;
+using SalesApi.Application.DTO.Response;
 using SalesApi.Application.Interfaces;
+using SalesApi.Application.Services;
 using SalesApi.Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,40 +17,44 @@ namespace SalesApi.Controllers
         public SalesController(ISaleService saleService) => _saleService = saleService;
 
         [HttpGet]
-        public IActionResult GetAll() => Ok(_saleService.GetAllSales());
-
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetAll()
         {
             try
             {
-                var sale = _saleService.GetSaleById(id);
-                if (sale == null) return NotFound();
-                return Ok(sale);
+                return Ok(new BaseResponse<IEnumerable<SalesApi.Application.DTO.Response.SaleDto>>(_saleService.GetAllSales(), "Success", "Operação concluída com sucesso"));
             }
             catch (Exception ex)
             {
-
-                throw;
-            }
-            finally
-            {
-
+                return Ok(new BaseResponse<IEnumerable<SalesApi.Application.DTO.Response.SaleDto>>(null, "Fail", "Tivemos um problema"));
             }
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Sale sale)
+        public IActionResult Create([FromBody] Application.DTO.Request.SaleDto saleDto)
         {
-            _saleService.CreateSale(sale);
-            return CreatedAtAction(nameof(GetById), new { id = sale.Id }, sale);
+            try
+            {
+                var sale = _saleService.CreateSale(saleDto);
+                return CreatedAtAction(nameof(Create), new { id = sale.Id }, new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(sale, "Success", "Operação concluída com sucesso"));
+            }
+            catch (Exception)
+            {
+                return Ok(new BaseResponse<List<SalesApi.Application.DTO.Response.SaleDto>>(null, "Fail", "Tivemos um problema"));
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _saleService.DeleteSale(id);
-            return NoContent();
+            try
+            {
+                _saleService.CancelSale(id);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return Ok(new BaseResponse<List<SalesApi.Application.DTO.Response.SaleDto>>(null, "Fail", "Tivemos um problema"));
+            }
         }
     }
 }

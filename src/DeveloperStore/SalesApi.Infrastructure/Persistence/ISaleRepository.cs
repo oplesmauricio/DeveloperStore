@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SalesApi.Domain.Entities;
+using SalesApi.Infrastructure.Entities;
 
 namespace SalesApi.Infrastructure.Persistence
 {
     public interface ISaleRepository
     {
-        void Add(Sale sale);
-        void Update(Sale sale);
-        Sale GetById(int saleId);
-        IEnumerable<Sale> GetAll();
+        void Add(SaleEntity sale);
+        void Update(SaleEntity sale);
+        SaleEntity GetById(int saleId);
+        IEnumerable<SaleEntity> GetAll();
         void Delete(int id);
     }
 }

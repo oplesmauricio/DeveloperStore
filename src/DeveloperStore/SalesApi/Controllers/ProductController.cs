@@ -23,13 +23,11 @@ namespace SalesApi.Controllers
         {
             try
             {
-                var products = _productService.GetAllProducts();
-                var productsDto = products.Select(p => _mapper.Map<ProductDto>(p)).ToList();
-                return Ok(new BaseResponse<List<ProductDto>>(productsDto, "Success", "Operação concluída com sucesso"));
+                return Ok(new BaseResponse<IEnumerable<ProductDto>>(_productService.GetAllProducts(), "Success", "Operação concluída com sucesso"));
             }
             catch (Exception ex)
             {
-                return Ok(new BaseResponse<List<ProductDto>>(null, "Fail", "Tivemos um problema"));
+                return Ok(new BaseResponse<IEnumerable<ProductDto>>(null, "Fail", "Tivemos um problema"));
             }
         }
 
@@ -38,11 +36,8 @@ namespace SalesApi.Controllers
         {
             try
             {
-                var produtct = _productService.CreateProduct(_mapper.Map<Product>(productDto));
-                var response = _mapper.Map<SalesApi.Application.DTO.Response.ProductDto>(produtct);
-
-                return CreatedAtAction(nameof(Create), new { id = response.Id }, new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(response, "Success", "Operação concluída com sucesso"));
-
+                var produtct = _productService.CreateProduct(productDto);
+                return CreatedAtAction(nameof(Create), new { id = produtct.Id }, new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(produtct, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception)
             {
