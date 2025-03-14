@@ -14,7 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("SalesDb"));
 
 builder.Services.AddScoped<ISaleService, SaleService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IEventLogger, EventLogger>();
 builder.Services.AddScoped<IDiscountStrategy, NoDiscountStrategy>();
 builder.Services.AddScoped<IDiscountStrategy, TenPercentDiscountStrategy>();
