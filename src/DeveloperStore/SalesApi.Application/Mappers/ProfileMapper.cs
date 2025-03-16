@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SalesApi.Application.Commands;
 using SalesApi.Domain.Entities;
 
 public class ProfileMapper : Profile
@@ -49,11 +50,11 @@ public class ProfileMapper : Profile
     {
         //Dominio mapeando para DTO de entrada e saida
         CreateMap<Product, SalesApi.Application.DTO.Response.ProductDto>();
-        CreateMap<SalesApi.Application.DTO.Request.ProductDto, Product>();
+        CreateMap<CreateProductCommand, Product>();
 
         //Entidades de banco mapeando para DTO de entrada e saida
         CreateMap<SalesApi.Infrastructure.Entities.ProductEntity, SalesApi.Application.DTO.Response.ProductDto>();
-        CreateMap<SalesApi.Application.DTO.Request.ProductDto, SalesApi.Infrastructure.Entities.ProductEntity>();
+        CreateMap<CreateProductCommand, SalesApi.Infrastructure.Entities.ProductEntity>();
 
         //Dominio mapeando para Entidades de banco
         CreateMap<Product, SalesApi.Infrastructure.Entities.ProductEntity>();

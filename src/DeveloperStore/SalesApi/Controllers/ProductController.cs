@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SalesApi.Application.Commands;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.Interfaces;
+using SalesApi.Application.Querys;
 using SalesApi.Domain.Entities;
 
 namespace SalesApi.Controllers
@@ -10,20 +13,19 @@ namespace SalesApi.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
-        private readonly IMapper _mapper;
-        public ProductController(IProductService productService, IMapper mapper)
+        private readonly IMediator _mediator;
+
+        public ProductController(IMediator mediator)
         {
-            _productService = productService;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                var result = _productService.GetAllProducts();
+                var result = await _mediator.Send(new GetAllProductsQuery());
 
                 return Ok(new BaseResponse<IEnumerable<ProductDto>>(result.Value, "Success", "Operação concluída com sucesso"));
             }
@@ -35,11 +37,11 @@ namespace SalesApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] SalesApi.Application.DTO.Request.ProductDto productDto)
+        public async Task<IActionResult> Create([FromBody] CreateProductCommand productDto)
         {
             try
             {
-                var result = _productService.CreateProduct(productDto);
+                var result = await _mediator.Send(productDto);
                 return CreatedAtAction(nameof(GetAll), new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(result.Value, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception)

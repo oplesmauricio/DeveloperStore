@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using SalesApi.Application.Handlers;
 using SalesApi.Application.Interfaces;
+using SalesApi.Application.Querys;
 using SalesApi.Application.Services;
 using SalesApi.Domain.Services;
 using SalesApi.Domain.Services.Validations;
@@ -17,7 +19,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<ISaleService, SaleService>();
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IEventLogger, EventLogger>();
@@ -25,6 +26,13 @@ builder.Services.AddScoped<IDiscountStrategy, NoDiscountStrategy>();
 builder.Services.AddScoped<IDiscountStrategy, TenPercentDiscountStrategy>();
 builder.Services.AddScoped<IDiscountStrategy, TwentyPercentDiscountStrategy>();
 builder.Services.AddScoped<IQuantityValidationStrategy, MaxQuantityValidationStrategy>();
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(CreateProductHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(GetAllProductsHandler).Assembly);
+});
+
 
 builder.Services.AddAutoMapper(typeof(ProfileMapper));
 
