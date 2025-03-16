@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SalesApi.Domain.Services;
+using FluentResults;
+using SalesApi.Domain.Services.Validations;
 
 namespace SalesApi.Domain.Entities
 {
@@ -33,6 +35,19 @@ namespace SalesApi.Domain.Entities
             {
                 item.ApplyDiscount(strategies);
             }
+        }
+
+        public Result QuantityValidation(IEnumerable<IQuantityValidationStrategy> strategies)
+        {
+            foreach (var item in Items)
+            {
+                var result = item.QuantityValidation(strategies);
+
+                if (result.IsFailed)
+                    return result;
+            }
+
+            return Result.Ok();
         }
     }
 }

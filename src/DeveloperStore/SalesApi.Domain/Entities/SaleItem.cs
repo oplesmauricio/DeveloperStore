@@ -7,40 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using SalesApi.Domain.Services;
 using System.Text.Json.Serialization;
+using SalesApi.Domain.Services.Validations;
+using FluentResults;
 
 namespace SalesApi.Domain.Entities
 {
-    [Table("saleitems")]
     public class SaleItem
     {
-        [Key]
-        [Column("id")]
         public int Id { get; set; }
-        
-        [ForeignKey("Sale")]
-        [Column("saleid")]
         public int SaleId { get; set; }
-
-        [Column("productid")]
         public Guid ProductId { get; set; }
-
-        [Column("productdescription")]
         public string ProductDescription { get; set; }
-
-        [Column("quantity")]
         public int Quantity { get; set; }
-
-        [Column("unitprice")]
         public decimal UnitPrice { get; set; }
-
-        [Column("discount")]
         public decimal Discount { get; private set; }
-
-        [NotMapped]
         public decimal TotalPrice => (UnitPrice * Quantity) - Discount;
-
-        [JsonIgnore]
-        public Sale? Sale { get; set; }
 
         public void ApplyDiscount(IEnumerable<IDiscountStrategy> strategies)
         {
@@ -52,6 +33,15 @@ namespace SalesApi.Domain.Entities
                     break;
                 }
             }
+        }
+
+        public Result QuantityValidation(IEnumerable<IQuantityValidationStrategy> strategies)
+        {
+            foreach (var strategy in strategies)
+                if (!strategy.IsValid(Quantity))
+                    return Result.Fail(strategy.GetErrorMessage());
+
+            return Result.Ok();
         }
     }
 }

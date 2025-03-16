@@ -1,6 +1,6 @@
 ﻿namespace SalesApi.Application.DTO.Response
 {
-    public class BaseResponse<T>
+    public class BaseResponse<T> : IResponse
     {
         public BaseResponse(T data, string status, string message)
         {

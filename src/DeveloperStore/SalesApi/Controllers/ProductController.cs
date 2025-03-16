@@ -29,7 +29,8 @@ namespace SalesApi.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new BaseResponse<IEnumerable<ProductDto>>(null, "Fail", "Tivemos um problema"));
+                //telemmetria ou kibana passando ex
+                return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
 
@@ -43,7 +44,8 @@ namespace SalesApi.Controllers
             }
             catch (Exception)
             {
-                return Ok(new BaseResponse<List<ProductDto>>(null, "Fail", "Tivemos um problema"));
+                //telemmetria ou kibana passando ex
+                return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
     }

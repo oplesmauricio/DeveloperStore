@@ -31,7 +31,7 @@ namespace SalesApi.Infrastructure.Entities
         public decimal UnitPrice { get; set; }
 
         [Column("discount")]
-        public decimal Discount { get; private set; }
+        public decimal Discount { get; set; }
 
         [NotMapped]
         public decimal TotalPrice => (UnitPrice * Quantity) - Discount;

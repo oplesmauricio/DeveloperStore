@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using SalesApi.Application.DTO.Request;
 using SalesApi.Application.DTO.Response;
+using SalesApi.Application.ExtensionMethods;
 using SalesApi.Application.Interfaces;
 using SalesApi.Application.Services;
 using SalesApi.Domain.Entities;
@@ -26,7 +28,8 @@ namespace SalesApi.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new BaseResponse<IEnumerable<SalesApi.Application.DTO.Response.SaleDto>>(null, "Fail", "Tivemos um problema"));
+                //telemmetria ou kibana passando ex
+                return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
 
@@ -36,11 +39,20 @@ namespace SalesApi.Controllers
             try
             {
                 var result = _saleService.CreateSale(saleDto);
-                return CreatedAtAction(nameof(GetAll), new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(result.Value, "Success", "Operação concluída com sucesso"));
+
+                if (result.IsSuccess)
+                    return CreatedAtAction(nameof(GetAll), new BaseResponse<Application.DTO.Response.SaleDto>(result.Value, "Success", "Operação concluída com sucesso"));
+
+                var error = result.Errors.FirstOrDefault();
+                var httpCodeResponse = error.Metadata[nameof(HttpStatusCode)];
+                var errorMainMsg = error.Metadata["error"];
+
+                return StatusCode((int)httpCodeResponse, new BaseErrorResponse(httpCodeResponse.ToString(), errorMainMsg.ToString(), result.Errors.Serialization().ToString()));
             }
             catch (Exception)
             {
-                return Ok(new BaseResponse<List<SalesApi.Application.DTO.Response.SaleDto>>(null, "Fail", "Tivemos um problema"));
+                //telemmetria ou kibana passando ex
+                return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
 
@@ -54,7 +66,8 @@ namespace SalesApi.Controllers
             }
             catch (Exception)
             {
-                return Ok(new BaseResponse<List<SalesApi.Application.DTO.Response.SaleDto>>(null, "Fail", "Tivemos um problema"));
+                //telemmetria ou kibana passando ex
+                return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
     }

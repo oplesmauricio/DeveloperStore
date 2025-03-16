@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SalesApi.Application.Interfaces;
 using SalesApi.Application.Services;
 using SalesApi.Domain.Services;
+using SalesApi.Domain.Services.Validations;
 using SalesApi.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IEventLogger, EventLogger>();
 builder.Services.AddScoped<IDiscountStrategy, NoDiscountStrategy>();
 builder.Services.AddScoped<IDiscountStrategy, TenPercentDiscountStrategy>();
 builder.Services.AddScoped<IDiscountStrategy, TwentyPercentDiscountStrategy>();
+builder.Services.AddScoped<IQuantityValidationStrategy, MaxQuantityValidationStrategy>();
 
 builder.Services.AddAutoMapper(typeof(ProfileMapper));
 

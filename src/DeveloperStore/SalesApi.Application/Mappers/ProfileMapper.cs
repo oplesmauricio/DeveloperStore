@@ -17,7 +17,9 @@ public class ProfileMapper : Profile
         CreateMap<SalesApi.Application.DTO.Request.SaleItemDto, SaleItem>();
 
         //Entidades de banco mapeando para DTO de entrada e saida
-        CreateMap<SalesApi.Infrastructure.Entities.SaleItemEntity, SalesApi.Application.DTO.Response.SaleItemDto>();
+        CreateMap<SalesApi.Infrastructure.Entities.SaleItemEntity, SalesApi.Application.DTO.Response.SaleItemDto>()
+            .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.IsCanceled, opt => opt.MapFrom(src => src.Sale.IsCanceled));
         CreateMap<SalesApi.Application.DTO.Request.SaleItemDto, SalesApi.Infrastructure.Entities.SaleItemEntity>();
 
         //Dominio mapeando para Entidades de banco
@@ -32,7 +34,10 @@ public class ProfileMapper : Profile
         CreateMap<SalesApi.Application.DTO.Request.SaleDto, Sale>();
 
         //Entidades de banco mapeando para DTO de entrada e saida
-        CreateMap<SalesApi.Infrastructure.Entities.SaleEntity, SalesApi.Application.DTO.Response.SaleDto>();
+        CreateMap<SalesApi.Infrastructure.Entities.SaleEntity, SalesApi.Application.DTO.Response.SaleDto>()
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.SaleDate))
+            .ForMember(dest => dest.Canceled, opt => opt.MapFrom(src => src.IsCanceled))
+            .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.TotalValue));
         CreateMap<SalesApi.Application.DTO.Request.SaleDto, SalesApi.Infrastructure.Entities.SaleEntity>();
 
         //Dominio mapeando para Entidades de banco
