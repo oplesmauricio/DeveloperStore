@@ -23,7 +23,9 @@ namespace SalesApi.Controllers
         {
             try
             {
-                return Ok(new BaseResponse<IEnumerable<ProductDto>>(_productService.GetAllProducts(), "Success", "Operação concluída com sucesso"));
+                var result = _productService.GetAllProducts();
+
+                return Ok(new BaseResponse<IEnumerable<ProductDto>>(result.Value, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception ex)
             {
@@ -36,8 +38,8 @@ namespace SalesApi.Controllers
         {
             try
             {
-                var produtct = _productService.CreateProduct(productDto);
-                return CreatedAtAction(nameof(GetAll), new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(produtct, "Success", "Operação concluída com sucesso"));
+                var result = _productService.CreateProduct(productDto);
+                return CreatedAtAction(nameof(GetAll), new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(result.Value, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception)
             {

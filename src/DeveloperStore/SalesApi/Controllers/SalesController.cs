@@ -21,7 +21,8 @@ namespace SalesApi.Controllers
         {
             try
             {
-                return Ok(new BaseResponse<IEnumerable<SalesApi.Application.DTO.Response.SaleDto>>(_saleService.GetAllSales(), "Success", "Operação concluída com sucesso"));
+                var result = _saleService.GetAllSales();
+                return Ok(new BaseResponse<IEnumerable<SalesApi.Application.DTO.Response.SaleDto>>(result.Value, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception ex)
             {
@@ -34,8 +35,8 @@ namespace SalesApi.Controllers
         {
             try
             {
-                var sale = _saleService.CreateSale(saleDto);
-                return CreatedAtAction(nameof(Create), new { id = sale.Id }, new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(sale, "Success", "Operação concluída com sucesso"));
+                var result = _saleService.CreateSale(saleDto);
+                return CreatedAtAction(nameof(GetAll), new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(result.Value, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception)
             {
@@ -48,7 +49,7 @@ namespace SalesApi.Controllers
         {
             try
             {
-                _saleService.CancelSale(id);
+                var result = _saleService.CancelSale(id);
                 return Ok(new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(null, "Success", "Venda cancelada com sucesso"));
             }
             catch (Exception)

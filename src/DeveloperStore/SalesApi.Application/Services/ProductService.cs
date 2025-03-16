@@ -11,6 +11,7 @@ using SalesApi.Application.DTO.Request;
 using SalesApi.Application.DTO.Response;
 using AutoMapper;
 using SalesApi.Infrastructure.Entities;
+using FluentResults;
 
 namespace SalesApi.Application.Services
 {
@@ -27,7 +28,7 @@ namespace SalesApi.Application.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<DTO.Response.ProductDto> GetAllProducts()
+        public Result<IEnumerable<DTO.Response.ProductDto>> GetAllProducts()
         {
             var productsEntity = _productRepository.GetAll();
 
@@ -35,19 +36,18 @@ namespace SalesApi.Application.Services
             return productsEntity.Select(p => _mapper.Map<DTO.Response.ProductDto>(p)).ToList();
         }
 
-        public DTO.Response.ProductDto CreateProduct(DTO.Request.ProductDto productDto)
+        public Result<DTO.Response.ProductDto> CreateProduct(DTO.Request.ProductDto productDto)
         {
             var produtct = _mapper.Map<Product>(productDto);
 
             //efetuar alguma validacao de negocio e mapear para objeto de banco
-
             //produtct.ValidationExample();
 
             var produtctEntity = _mapper.Map<ProductEntity>(produtct);
             _productRepository.Add(produtctEntity);
 
             _eventLogger.Log("SaleCreated");
-            return _mapper.Map<SalesApi.Application.DTO.Response.ProductDto>(produtct);
+            return _mapper.Map<SalesApi.Application.DTO.Response.ProductDto>(produtctEntity);
         }
     }
 }

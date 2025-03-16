@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentResults;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.Interfaces;
 using SalesApi.Domain.Entities;
@@ -28,7 +29,7 @@ namespace SalesApi.Application.Services
             _mapper = mapper;
         }
 
-        public DTO.Response.SaleDto CreateSale(DTO.Request.SaleDto saleDto)
+        public Result<DTO.Response.SaleDto> CreateSale(DTO.Request.SaleDto saleDto)
         {
             var sale = _mapper.Map<Sale>(saleDto);
             sale.ApplyDiscounts(_discountStrategies);
@@ -41,16 +42,18 @@ namespace SalesApi.Application.Services
             return _mapper.Map<SaleDto>(saleEntity);
         }
 
-        public void CancelSale(int saleId)
+        public Result CancelSale(int saleId)
         {
             var sale = _saleRepository.GetById(saleId);
             if (sale == null) throw new Exception("Sale not found");
             sale.IsCanceled = true;
             _saleRepository.Update(sale);
             _eventLogger.Log("SaleCanceled");
+
+            return Result.Ok();
         }
 
-        public IEnumerable<DTO.Response.SaleDto> GetAllSales()
+        public Result<IEnumerable<DTO.Response.SaleDto>> GetAllSales()
         {
             var salesEntity = _saleRepository.GetAll();
 
