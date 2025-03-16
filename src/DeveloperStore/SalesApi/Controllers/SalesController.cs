@@ -9,7 +9,7 @@ using SalesApi.Domain.Entities;
 
 namespace SalesApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SalesController : ControllerBase
     {
@@ -49,7 +49,7 @@ namespace SalesApi.Controllers
             try
             {
                 _saleService.CancelSale(id);
-                return NoContent();
+                return Ok(new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(null, "Success", "Venda cancelada com sucesso"));
             }
             catch (Exception)
             {

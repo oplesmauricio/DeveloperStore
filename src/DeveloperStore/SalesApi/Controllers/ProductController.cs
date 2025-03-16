@@ -6,7 +6,7 @@ using SalesApi.Domain.Entities;
 
 namespace SalesApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace SalesApi.Controllers
             try
             {
                 var produtct = _productService.CreateProduct(productDto);
-                return CreatedAtAction(nameof(Create), new { id = produtct.Id }, new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(produtct, "Success", "Operação concluída com sucesso"));
+                return CreatedAtAction(nameof(GetAll), new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(produtct, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception)
             {

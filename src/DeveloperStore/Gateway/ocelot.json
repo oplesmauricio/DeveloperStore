@@ -10,11 +10,11 @@
                     "Port": 8090
                 }
             ],
-            "DownstreamPathTemplate": "/api/Product"
+            "DownstreamPathTemplate": "/Product"
         },
         {
             "UpstreamPathTemplate": "/gateway/sales",
-            "UpstreamHttpMethod": [ "Get", "Post", "Delete" ],
+            "UpstreamHttpMethod": [ "Get", "Post" ],
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -22,7 +22,7 @@
                     "Port": 8090
                 }
             ],
-            "DownstreamPathTemplate": "/api/Sales"
+            "DownstreamPathTemplate": "/Sales"
         },
         {
             "UpstreamPathTemplate": "/gateway/sales/{id}",
@@ -34,7 +34,7 @@
                     "Port": 8090
                 }
             ],
-            "DownstreamPathTemplate": "/api/Sales/{id}"
+            "DownstreamPathTemplate": "/Sales/{id}"
         }
     ],
     "GlobalConfiguration": {
