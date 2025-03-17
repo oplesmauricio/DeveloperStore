@@ -9,7 +9,6 @@ EXPOSE 8090
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Directory.Packages.props", "."]
 COPY ["src/SalesApi/SalesApi.csproj", "src/SalesApi/"]
 COPY ["src/SalesApi.Domain/SalesApi.Domain.csproj", "src/SalesApi.Domain/"]
 COPY ["src/SalesApi.Infrastructure/SalesApi.Infrastructure.csproj", "src/SalesApi.Infrastructure/"]
