@@ -14,6 +14,9 @@ using SalesApi.Domain.Services;
 using SalesApi.Infrastructure.Persistence;
 using SalesApi.Application.ExtensionMethods;
 using SalesApi.Infrastructure.Entities;
+using SalesApi.Domain.Entities;
+using SalesApi.Domain.Notifications;
+using SalesApi.Domain.Notifications.Sales;
 
 namespace SalesApi.Application.Handlers.Sale
 {
@@ -23,13 +26,15 @@ namespace SalesApi.Application.Handlers.Sale
         private readonly IEnumerable<IDiscountStrategy> _discountStrategies;
         private readonly IEnumerable<IQuantityValidationStrategy> _quantityValidationStrategies;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public CreateSaleHandler(ISaleRepository saleRepository, IEnumerable<IDiscountStrategy> discountStrategies, IEnumerable<IQuantityValidationStrategy> quantityValidationStrategies, IMapper mapper)
+        public CreateSaleHandler(ISaleRepository saleRepository, IEnumerable<IDiscountStrategy> discountStrategies, IEnumerable<IQuantityValidationStrategy> quantityValidationStrategies, IMapper mapper, IMediator mediator)
         {
             _saleRepository = saleRepository;
             _discountStrategies = discountStrategies;
             _quantityValidationStrategies = quantityValidationStrategies;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<Result<SaleDto>> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
@@ -44,6 +49,8 @@ namespace SalesApi.Application.Handlers.Sale
 
             var saleEntity = _mapper.Map<SaleEntity>(sale);
             _saleRepository.Add(saleEntity);
+
+            await _mediator.Publish(new CreatedSaleNotification { Sale = sale });
 
             return _mapper.Map<SaleDto>(saleEntity);
         }

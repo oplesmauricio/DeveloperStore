@@ -15,16 +15,20 @@ using SalesApi.Infrastructure.Persistence;
 using SalesApi.Application.ExtensionMethods;
 using SalesApi.Infrastructure.Entities;
 using SalesApi.Domain.Entities;
+using SalesApi.Domain.Notifications;
+using SalesApi.Domain.Notifications.Sales;
 
 namespace SalesApi.Application.Handlers.Sale
 {
     public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, Result>
     {
         private readonly ISaleRepository _saleRepository;
+        private readonly IMediator _mediator;
 
-        public CancelSaleHandler(ISaleRepository saleRepository)
+        public CancelSaleHandler(ISaleRepository saleRepository, IMediator mediator)
         {
             _saleRepository = saleRepository;
+            _mediator = mediator;
         }
 
         public async Task<Result> Handle(CancelSaleCommand request, CancellationToken cancellationToken)
@@ -34,6 +38,8 @@ namespace SalesApi.Application.Handlers.Sale
                 return Result.Fail("Nao existe venda sob este id no sistema");
             sale.IsCanceled = true;
             _saleRepository.Update(sale);
+
+            await _mediator.Publish(new CancelledSaleNotification { SaleId = sale.Id });
 
             return Result.Ok();
         }

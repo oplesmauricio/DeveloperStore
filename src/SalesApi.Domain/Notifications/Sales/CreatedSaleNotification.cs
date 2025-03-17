@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using MediatR;
 using SalesApi.Domain.Entities;
 
-namespace SalesApi.Domain.Notifications
+namespace SalesApi.Domain.Notifications.Sales
 {
-    public class ProductCreatedNotification : INotification
+    public class CreatedSaleNotification : INotification
     {
-        public Product Product { get; set; }
+        public Sale Sale { get; set; }
     }
 }

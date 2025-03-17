@@ -10,6 +10,7 @@ using SalesApi.Application.Commands.Products;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.Interfaces;
 using SalesApi.Domain.Notifications;
+using SalesApi.Domain.Notifications.Products;
 using SalesApi.Infrastructure.Entities;
 using SalesApi.Infrastructure.Persistence;
 
@@ -38,7 +39,7 @@ namespace SalesApi.Application.Handlers.Product
             var produtctEntity = _mapper.Map<ProductEntity>(produtct);
             _productRepository.Add(produtctEntity);
 
-            await _mediator.Publish(new ProductCreatedNotification { Product = produtct });
+            await _mediator.Publish(new CreatedProductNotification { Product = produtct });
 
             return _mapper.Map<ProductDto>(produtctEntity);
         }
