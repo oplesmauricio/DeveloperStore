@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeveloperStore\SalesApi.Domain\SalesApi.Domain.csproj" />
+    <ProjectReference Include="..\SalesApi.Domain\SalesApi.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.WebHost.UseUrls("http://*:8090");
 builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("Postgres");

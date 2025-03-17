@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SalesApi.Application\SalesApi.Application.csproj" />
-    <ProjectReference Include="..\SalesApi.Domain\SalesApi.Domain.csproj" />
   </ItemGroup>
 
 </Project>
