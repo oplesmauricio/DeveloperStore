@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentResults;
 using MediatR;
-using SalesApi.Application.Commands;
-using SalesApi.Application.DTO.Request;
+using SalesApi.Application.Commands.Products;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.Interfaces;
-using SalesApi.Domain.Entities;
 using SalesApi.Domain.Notifications;
 using SalesApi.Infrastructure.Entities;
 using SalesApi.Infrastructure.Persistence;
 
-namespace SalesApi.Application.Handlers
+namespace SalesApi.Application.Handlers.Product
 {
-    public class CreateProductHandler : IRequestHandler<CreateProductCommand, Result<DTO.Response.ProductDto>>
+    public class CreateProductHandler : IRequestHandler<CreateProductCommand, Result<ProductDto>>
     {
         private readonly IMediator _mediator;
         private readonly IProductRepository _productRepository;
@@ -30,9 +28,9 @@ namespace SalesApi.Application.Handlers
             _mapper = mapper;
         }
 
-        public async Task<Result<DTO.Response.ProductDto>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Result<ProductDto>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var produtct = _mapper.Map<Product>(request);
+            var produtct = _mapper.Map<Domain.Entities.Product>(request);
 
             //efetuar alguma validacao de negocio e mapear para objeto de banco
             //produtct.ValidationExample();
@@ -41,8 +39,8 @@ namespace SalesApi.Application.Handlers
             _productRepository.Add(produtctEntity);
 
             await _mediator.Publish(new ProductCreatedNotification { Product = produtct });
-            
-            return _mapper.Map<SalesApi.Application.DTO.Response.ProductDto>(produtctEntity);
+
+            return _mapper.Map<ProductDto>(produtctEntity);
         }
     }
 }

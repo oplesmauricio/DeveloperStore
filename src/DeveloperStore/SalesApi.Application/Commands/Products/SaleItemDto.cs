@@ -9,7 +9,7 @@ using SalesApi.Domain.Services;
 using System.Text.Json.Serialization;
 using System.Diagnostics;
 
-namespace SalesApi.Application.DTO.Request
+namespace SalesApi.Application.Commands.Products
 {
     public class SaleItemDto : IValidatableObject
     {

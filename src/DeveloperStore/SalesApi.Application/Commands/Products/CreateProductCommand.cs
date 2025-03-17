@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentResults;
 using MediatR;
-using SalesApi.Application.DTO.Request;
 
-namespace SalesApi.Application.Commands
+namespace SalesApi.Application.Commands.Products
 {
     public class CreateProductCommand : IRequest<Result<DTO.Response.ProductDto>>
     {

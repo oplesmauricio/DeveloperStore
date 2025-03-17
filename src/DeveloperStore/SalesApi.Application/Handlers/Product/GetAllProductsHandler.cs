@@ -7,12 +7,12 @@ using AutoMapper;
 using FluentResults;
 using MediatR;
 using SalesApi.Application.DTO.Response;
-using SalesApi.Application.Querys;
+using SalesApi.Application.Querys.Products;
 using SalesApi.Infrastructure.Persistence;
 
-namespace SalesApi.Application.Handlers
+namespace SalesApi.Application.Handlers.Product
 {
-    public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, Result<IEnumerable<DTO.Response.ProductDto>>>
+    public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, Result<IEnumerable<ProductDto>>>
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
@@ -23,12 +23,12 @@ namespace SalesApi.Application.Handlers
             _mapper = mapper;
         }
 
-        public async Task<Result<IEnumerable<DTO.Response.ProductDto>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<ProductDto>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var productsEntity = _productRepository.GetAll();
 
             //aqui eu posso passar diretamente para dto pois o mapeamento me permite
-            return productsEntity.Select(p => _mapper.Map<DTO.Response.ProductDto>(p)).ToList();
+            return productsEntity.Select(p => _mapper.Map<ProductDto>(p)).ToList();
         }
     }
 

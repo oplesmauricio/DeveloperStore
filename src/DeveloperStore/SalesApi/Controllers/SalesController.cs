@@ -1,9 +1,11 @@
 ﻿using System.Net;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SalesApi.Application.DTO.Request;
+using SalesApi.Application.Commands.SAles;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.ExtensionMethods;
 using SalesApi.Application.Interfaces;
+using SalesApi.Application.Querys.SAles;
 using SalesApi.Application.Services;
 using SalesApi.Domain.Entities;
 
@@ -15,15 +17,15 @@ namespace SalesApi.Controllers
     [ApiController]
     public class SalesController : ControllerBase
     {
-        private readonly ISaleService _saleService;
-        public SalesController(ISaleService saleService) => _saleService = saleService;
+        private readonly IMediator _mediator;
+        public SalesController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                var result = _saleService.GetAllSales();
+                var result = await _mediator.Send(new GetAllSalesQuery());
                 return Ok(new BaseResponse<IEnumerable<SalesApi.Application.DTO.Response.SaleDto>>(result.Value, "Success", "Operação concluída com sucesso"));
             }
             catch (Exception ex)
@@ -34,11 +36,11 @@ namespace SalesApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Application.DTO.Request.SaleDto saleDto)
+        public async Task<IActionResult> Create([FromBody] CreateSaleCommand command)
         {
             try
             {
-                var result = _saleService.CreateSale(saleDto);
+                var result = await _mediator.Send(command);
 
                 if (result.IsSuccess)
                     return CreatedAtAction(nameof(GetAll), new BaseResponse<Application.DTO.Response.SaleDto>(result.Value, "Success", "Operação concluída com sucesso"));
@@ -61,7 +63,8 @@ namespace SalesApi.Controllers
         {
             try
             {
-                var result = _saleService.CancelSale(id);
+                var command = new CancelSaleCommand(id);
+                var result = _mediator.Send(command);
                 return Ok(new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(null, "Success", "Venda cancelada com sucesso"));
             }
             catch (Exception)

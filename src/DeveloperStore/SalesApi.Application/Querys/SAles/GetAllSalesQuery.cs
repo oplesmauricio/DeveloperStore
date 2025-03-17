@@ -7,8 +7,9 @@ using FluentResults;
 using MediatR;
 using SalesApi.Application.DTO.Response;
 
-namespace SalesApi.Application.Querys
+namespace SalesApi.Application.Querys.SAles
 {
-    public class GetAllProductsQuery : IRequest<Result<IEnumerable<DTO.Response.ProductDto>>> { }
-
+    public class GetAllSalesQuery : IRequest<Result<IEnumerable<SaleDto>>>
+    {
+    }
 }

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SalesApi.Application.Commands;
+using SalesApi.Application.Commands.Products;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.Interfaces;
 using SalesApi.Application.Querys;
+using SalesApi.Application.Querys.Products;
 using SalesApi.Domain.Entities;
 
 namespace SalesApi.Controllers

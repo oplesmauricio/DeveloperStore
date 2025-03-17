@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SalesApi.Application.Handlers;
+using SalesApi.Application.Handlers.Product;
+using SalesApi.Application.Handlers.Sale;
 using SalesApi.Application.Interfaces;
 using SalesApi.Application.Querys;
 using SalesApi.Application.Services;
@@ -18,7 +19,6 @@ var connectionString = builder.Configuration.GetConnectionString("Postgres");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IEventLogger, EventLogger>();
@@ -31,6 +31,9 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(CreateProductHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(GetAllProductsHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(CreateSaleHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(GetAllSalesHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(CancelSaleHandler).Assembly);
 });
 
 
