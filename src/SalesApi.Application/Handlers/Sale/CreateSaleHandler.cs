@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentResults;
 using MediatR;
-using SalesApi.Application.Commands.Products;
 using SalesApi.Application.Commands.SAles;
 using SalesApi.Application.DTO.Response;
-using SalesApi.Domain.Services.Validations;
-using SalesApi.Domain.Services;
-using SalesApi.Infrastructure.Persistence;
 using SalesApi.Application.ExtensionMethods;
-using SalesApi.Infrastructure.Entities;
-using SalesApi.Domain.Entities;
-using SalesApi.Domain.Notifications;
 using SalesApi.Domain.Notifications.Sales;
+using SalesApi.Domain.Services;
+using SalesApi.Domain.Services.Validations;
+using SalesApi.Infrastructure.Entities;
+using SalesApi.Infrastructure.Persistence;
 
 namespace SalesApi.Application.Handlers.Sale
 {

@@ -4,10 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SalesApi.Application.Commands.SAles;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.ExtensionMethods;
-using SalesApi.Application.Interfaces;
 using SalesApi.Application.Querys.SAles;
-using SalesApi.Application.Services;
-using SalesApi.Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

@@ -1,14 +1,9 @@
 ﻿using Bogus;
 using FluentAssertions;
-using FluentResults;
 using NSubstitute;
 using SalesApi.Domain.Entities;
 using SalesApi.Domain.Services;
 using SalesApi.Domain.Services.Validations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
 
 namespace SalesApi.Tests.Domain
 {

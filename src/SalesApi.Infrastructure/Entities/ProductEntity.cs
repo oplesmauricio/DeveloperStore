@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SalesApi.Infrastructure.Entities
 {
@@ -18,7 +13,7 @@ namespace SalesApi.Infrastructure.Entities
         [Column("title")]
         public string Title { get; set; }
 
-        [Column("price")] 
+        [Column("price")]
         public decimal Price { get; set; }
 
         [Column("description")]

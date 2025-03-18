@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SalesApi.Domain.Services;
-using System.Text.Json.Serialization;
-using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SalesApi.Application.Commands.Products
 {

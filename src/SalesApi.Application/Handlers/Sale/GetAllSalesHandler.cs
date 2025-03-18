@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentResults;
 using MediatR;
 using SalesApi.Application.DTO.Response;
-using SalesApi.Application.Interfaces;
 using SalesApi.Application.Querys.SAles;
-using SalesApi.Domain.Services.Validations;
-using SalesApi.Domain.Services;
 using SalesApi.Infrastructure.Persistence;
 
 namespace SalesApi.Application.Handlers.Sale

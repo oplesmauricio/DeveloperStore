@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SalesApi.Domain.Services;
 
 namespace SalesApi.Infrastructure.Entities
 {
@@ -25,7 +19,7 @@ namespace SalesApi.Infrastructure.Entities
         [Column("customer")]
         public Guid CustomerId { get; set; }
 
-        [NotMapped] 
+        [NotMapped]
         public decimal TotalValue => Items.Sum(i => i.TotalPrice);
 
         [Column("store")]

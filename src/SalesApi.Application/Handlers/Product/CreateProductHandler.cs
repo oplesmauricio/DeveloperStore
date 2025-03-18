@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentResults;
 using MediatR;
 using SalesApi.Application.Commands.Products;
 using SalesApi.Application.DTO.Response;
-using SalesApi.Application.Interfaces;
-using SalesApi.Domain.Notifications;
 using SalesApi.Domain.Notifications.Products;
 using SalesApi.Infrastructure.Entities;
 using SalesApi.Infrastructure.Persistence;

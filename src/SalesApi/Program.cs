@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using SalesApi.Application.Handlers.Product;
 using SalesApi.Application.Handlers.Sale;
 using SalesApi.Application.Interfaces;
-using SalesApi.Application.Querys;
 using SalesApi.Application.Services;
 using SalesApi.Domain.Services;
 using SalesApi.Domain.Services.Validations;
