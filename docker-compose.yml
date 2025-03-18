@@ -44,6 +44,28 @@ services:
     networks:
       - evaluation-network
 
+  db-init:
+    image: postgres:latest
+    container_name: db-initializer
+    depends_on:
+      - db
+    volumes:
+      - ${PWD}/src/SalesApi.Infrastructure/Sql:/Sql
+    command: >
+      bash -c "
+        echo 'Waiting for database to be ready...' &&
+        until pg_isready -h db -p 5432 -U postgres; do
+          sleep 2;
+        done &&
+        echo 'Database is ready. Running initialization script...' &&
+        psql -h db -U postgres -d SalesApiDb -f /Sql/create_tables.sql &&
+        echo 'Database initialization completed!'"
+    environment:
+      PGPASSWORD: admin
+    networks:
+      - evaluation-network
+
+
 networks:
   evaluation-network:
     external: true
