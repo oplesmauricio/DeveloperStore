@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SalesApi.Application.Commands.SAles;
 using SalesApi.Application.DTO.Response;
 using SalesApi.Application.ExtensionMethods;
+using SalesApi.Application.Interfaces;
 using SalesApi.Application.Querys.SAles;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,7 +16,12 @@ namespace SalesApi.Controllers
     public class SalesController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public SalesController(IMediator mediator) => _mediator = mediator;
+        private readonly IEventLogger _logger;
+        public SalesController(IMediator mediator, IEventLogger eventLogger, IEventLogger logger)
+        {
+            _mediator = mediator;
+            _logger = logger;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -27,7 +33,7 @@ namespace SalesApi.Controllers
             }
             catch (Exception ex)
             {
-                //telemmetria ou kibana passando ex
+                _logger.Log(ex);
                 return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
@@ -48,9 +54,9 @@ namespace SalesApi.Controllers
 
                 return StatusCode((int)httpCodeResponse, new BaseErrorResponse(httpCodeResponse.ToString(), errorMainMsg.ToString(), result.Errors.Serialization().ToString()));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //telemmetria ou kibana passando ex
+                _logger.Log(ex);
                 return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
@@ -64,9 +70,9 @@ namespace SalesApi.Controllers
                 var result = _mediator.Send(command);
                 return Ok(new BaseResponse<SalesApi.Application.DTO.Response.SaleDto>(null, "Success", "Venda cancelada com sucesso"));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //telemmetria ou kibana passando ex
+                _logger.Log(ex);
                 return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }

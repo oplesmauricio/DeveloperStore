@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SalesApi.Application.Commands.Products;
 using SalesApi.Application.DTO.Response;
+using SalesApi.Application.Interfaces;
 using SalesApi.Application.Querys.Products;
 
 namespace SalesApi.Controllers
@@ -11,10 +12,12 @@ namespace SalesApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IEventLogger _logger;
 
-        public ProductController(IMediator mediator)
+        public ProductController(IMediator mediator, IEventLogger eventLogger)
         {
             _mediator = mediator;
+            _logger = eventLogger;
         }
 
         [HttpGet]
@@ -28,7 +31,7 @@ namespace SalesApi.Controllers
             }
             catch (Exception ex)
             {
-                //telemmetria ou kibana passando ex
+                _logger.Log(ex);
                 return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
@@ -41,9 +44,9 @@ namespace SalesApi.Controllers
                 var result = await _mediator.Send(productDto);
                 return CreatedAtAction(nameof(GetAll), new BaseResponse<SalesApi.Application.DTO.Response.ProductDto>(result.Value, "Success", "Operação concluída com sucesso"));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //telemmetria ou kibana passando ex
+                _logger.Log(ex);
                 return StatusCode(500, new BaseErrorResponse("InternalServerError", "Fail", "Tivemos um problema"));
             }
         }
