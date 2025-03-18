@@ -19,13 +19,10 @@ var connectionString = builder.Configuration.GetConnectionString("Postgres");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddScoped<ISaleRepository, SaleRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+ConfigureRepositorys(builder);
 builder.Services.AddScoped<IEventLogger, EventLogger>();
-builder.Services.AddScoped<IDiscountStrategy, NoDiscountStrategy>();
-builder.Services.AddScoped<IDiscountStrategy, TenPercentDiscountStrategy>();
-builder.Services.AddScoped<IDiscountStrategy, TwentyPercentDiscountStrategy>();
-builder.Services.AddScoped<IQuantityValidationStrategy, MaxQuantityValidationStrategy>();
+
+ConfigureStrategys(builder);
 
 builder.Services.AddMediatR(cfg =>
 {
@@ -59,3 +56,17 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static void ConfigureRepositorys(WebApplicationBuilder builder)
+{
+    builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+    builder.Services.AddScoped<IProductRepository, ProductRepository>();
+}
+
+static void ConfigureStrategys(WebApplicationBuilder builder)
+{
+    builder.Services.AddScoped<IDiscountStrategy, NoDiscountStrategy>();
+    builder.Services.AddScoped<IDiscountStrategy, TenPercentDiscountStrategy>();
+    builder.Services.AddScoped<IDiscountStrategy, TwentyPercentDiscountStrategy>();
+    builder.Services.AddScoped<IQuantityValidationStrategy, MaxQuantityValidationStrategy>();
+}
